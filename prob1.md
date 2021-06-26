@@ -35,7 +35,7 @@ Output:
 
 ### Answer
 
-```
+```sql
 SELECT question_id AS survey_log
 FROM survey_log
 WHERE answer_id IS NOT NULL
