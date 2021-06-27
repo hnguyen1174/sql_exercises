@@ -20,6 +20,14 @@ CREATE TABLE dept (
   loc varchar(13) default NULL
 );
 
+DROP TABLE IF EXISTS emp_bonus;
+
+CREATE TABLE emp_bonus (
+  empno decimal(4,0) default NULL,
+  received date default NULL,
+  type decimal(1,0) default NULL
+);
+
 INSERT INTO emp VALUES ('7369','SMITH','CLERK','7902','1980-12-17','800.00',NULL,'20');
 INSERT INTO emp VALUES ('7499','ALLEN','SALESMAN','7698','1981-02-20','1600.00','300.00','30');
 INSERT INTO emp VALUES ('7521','WARD','SALESMAN','7698','1981-02-22','1250.00','500.00','30');
@@ -39,4 +47,9 @@ INSERT INTO dept VALUES ('10','ACCOUNTING','NEW YORK');
 INSERT INTO dept VALUES ('20','RESEARCH','DALLAS');
 INSERT INTO dept VALUES ('30','SALES','CHICAGO');
 INSERT INTO dept VALUES ('40','OPERATIONS','BOSTON');
+
+INSERT INTO emp_bonus VALUES ('7934','2005-03-17','1');
+INSERT INTO emp_bonus VALUES ('7934','2005-02-15','2');
+INSERT INTO emp_bonus VALUES ('7839','2005-02-15','3');
+INSERT INTO emp_bonus VALUES ('7782','2005-02-15','1');
 ```
