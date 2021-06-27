@@ -1,9 +1,15 @@
 ### Functions:
 
-* concat()
+* `concat()`
+* `rand()`
+* `coalesce()`
+
+### Clauses:
+
+* is null / is not null
 * case when <sth> then <sth> else <sth> end as <name>
-* rand()
-* coalesce()
+* limit <n>
+* like <pattern>
 
 ### 1. Retrieving All Rows and Columns from a Table
 
