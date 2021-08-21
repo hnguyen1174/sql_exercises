@@ -1,2 +1,3 @@
-# sql_exercises
-SQL Exercises
+# SQL Exercise
+
+Sandbox: https://app.coderpad.io/sandbox#
