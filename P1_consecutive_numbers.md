@@ -47,6 +47,9 @@ Result table:
 ### Answwer
 
 ```sql
+-- Step 1: Create 2 lags by ID (using windows function)
+-- Step 2: Filter by ID (Num = Lag1 = Lag2)
+
 SELECT DISTINCT Num AS ConsecutiveNums FROM (
   SELECT Id, Num,
   LAG(Num, 1) OVER (ORDER BY Id) AS Lag1,
