@@ -21,7 +21,7 @@ Return the result table in any order.
 
 The query result format is in the following example:
 
-```sql
+```
 Logs table:
 +----+-----+
 | Id | Num |
@@ -60,7 +60,7 @@ WHERE Num = Lag1
 AND Lag1 = Lag2;
 ```
 
-```sql
+```
 Result table:
 +-----------------+
 | ConsecutiveNums |
