@@ -20,3 +20,4 @@
   on e.empId = b.empId
   where coalesce(b.bonus, 0) < 1000
   ```
+3. `WHERE` is executed before column creation, so we cannot create an alias and filter by `WHERE` in the same statement.
