@@ -1,5 +1,7 @@
 ## Schema and Tables
 
+Write an SQL query that reports the books that have sold less than 10 copies in the last year, excluding books that have been available for less than 1 month from today. Assume today is 2019-06-23.
+
 ```sql
 CREATE TABLE Books (
   book_id INT,
