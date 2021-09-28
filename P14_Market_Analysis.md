@@ -61,4 +61,35 @@ ON u.user_id = o.buyer_id
 GROUP BY u.user_id, u.join_date
 ```
 
+## Question 2
+
+Write an SQL query to find for each user, whether the brand of the second item (by date) they sold is their favorite brand. If a user sold less than two items, report the answer for that user as no.
+
+It is guaranteed that no seller sold more than one item on a day.
+
+## Answer 2
+
+```sql
+SELECT 
+    seller_id,
+    CASE WHEN order_count < 2 THEN 'no'
+    WHEN favorite_brand = item_brand THEN 'yes'
+    ELSE 'no' END AS 2nd_item_fav_brand
+FROM (
+SELECT 
+    u.user_id AS seller_id,
+    u.favorite_brand AS favorite_brand,
+    i.item_brand AS item_brand,
+    RANK() OVER (PARTITION BY o.seller_id ORDER BY o.order_date) AS item_rank,
+    COUNT(order_id) OVER (PARTITION BY o.seller_id) AS order_count
+FROM Users u
+LEFT JOIN Orders o
+ON u.user_id = o.seller_id
+LEFT JOIN Items i
+ON o.item_id = i.item_id
+) TMP
+WHERE item_rank = 2 
+OR order_count < 2
+```
+
 
