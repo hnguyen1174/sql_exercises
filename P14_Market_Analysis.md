@@ -67,8 +67,6 @@ Write an SQL query to find for each user, whether the brand of the second item (
 
 It is guaranteed that no seller sold more than one item on a day.
 
-## Answer 2
-
 ```sql
 SELECT 
     seller_id,
