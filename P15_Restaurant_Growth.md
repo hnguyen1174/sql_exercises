@@ -86,3 +86,51 @@ FROM CTE
 ) TMP
 WHERE row_no > 6
 ```
+
+## Question 2: Python
+
+```python 
+import pandas as pd
+import numpy as np
+
+cutomer_id = [
+    1, 2, 3, 4, 5, 6,
+    7, 8, 9, 1, 3
+]
+
+name = [
+    'Jhon', 'Daniel', 'Jade',
+    'Khaled', 'Winston', 'Elvis',
+    'Anna', 'Maria', 'Jaze', 'Jhon',
+    'Jade'
+]
+
+visited_on = [
+    '2019-01-01', '2019-01-02', '2019-01-03',
+    '2019-01-04', '2019-01-05', '2019-01-06',
+    '2019-01-07', '2019-01-08', '2019-01-09',
+    '2019-01-10', '2019-01-10'
+]
+
+amount = [
+    100, 110, 120, 130, 110,
+    140, 150, 80, 110, 130, 150
+]
+
+df = pd.DataFrame({
+    'customer_id': cutomer_id,
+    'name': name,
+    'visited_on': visited_on,
+    'amount': amount
+})
+
+df['visited_on'] = pd.to_datetime(df['visited_on'])
+df_by_date = df.groupby('visited_on')['amount'].sum().reset_index()
+df_result = pd.DataFrame({
+    'visited_on': df_by_date['visited_on'],
+    'amount': df_by_date['amount'].rolling(7).sum(),
+    'average_amount': df_by_date['amount'].rolling(7).mean().round(2)
+})
+df_result = df_result.dropna().reset_index().drop('index', axis=1)
+print(df_result)
+```
