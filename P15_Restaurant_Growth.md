@@ -1,6 +1,6 @@
 ## Table and Schema
 
-```sql
+```
 -- Table: Customer
 +---------------+---------+
 | Column Name   | Type    |
