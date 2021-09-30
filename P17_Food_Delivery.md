@@ -87,3 +87,41 @@ FROM Delivery
 ) TMP
 WHERE customer_order_rank = 1
 ```
+
+**Python**
+
+```python
+import pandas as pd
+import numpy as np
+
+
+delivery_id = [1, 2, 3, 4, 5, 6, 7]
+customer_id = [1, 2, 1, 3, 3, 2, 4]
+order_date = ['2019-08-01', '2019-08-02',
+              '2019-08-11', '2019-08-24',
+              '2019-08-21', '2019-08-11',
+              '2019-08-09']
+
+customer_pref_delivery_date = [
+    '2019-08-02', 
+    '2019-08-02',
+    '2019-08-12',
+    '2019-08-24',
+    '2019-08-22',
+    '2019-08-13',
+    '2019-08-09'
+]
+
+df = pd.DataFrame({
+    'delivery_id': delivery_id,
+    'customer_id': customer_id,
+    'order_date': order_date,
+    'customer_pref_delivery_date': customer_pref_delivery_date
+})
+df['order_date'] = pd.to_datetime(df['order_date'])
+df['customer_pref_delivery_date'] = pd.to_datetime(df['customer_pref_delivery_date'])
+
+df_first = df[df['order_date'] == df.groupby('customer_id')['order_date'].transform(min)]
+df_first_immediate = df_first[df_first['order_date'] == df_first['customer_pref_delivery_date']]
+print(df_first_immediate.shape[0]*100/df_first.shape[0])
+```
