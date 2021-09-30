@@ -94,6 +94,8 @@ In case of a tie, return lexicographically smaller movie name.
 
 The query is returned in 2 rows, the query result format is in the following example:
 
+**ANSWER 1**
+
 ```sql
 
 WITH CTE1 AS (
@@ -133,4 +135,28 @@ LIMIT 1
 SELECT results FROM CTE1
 UNION 
 SELECT results FROM CTE2
+```
+
+**ANSWER 2**
+
+```sql
+(SELECT
+  u.name AS results
+FROM movie_rating m
+JOIN users u USING (user_id)
+GROUP BY user_id
+ORDER BY COUNT(m.user_id) DESC, u.name LIMIT 1
+)
+
+UNION
+
+(SELECT 
+  m.title AS results 
+FROM movie_rating r
+LEFT JOIN movies m USING (movie_id)
+WHERE r.created_at LIKE '2020-02%'
+GROUP BY r.movie_id
+GROUP BY r.movie_id
+ORDER BY AVG(rating) DESC, title LIMIT 1
+)
 ```
