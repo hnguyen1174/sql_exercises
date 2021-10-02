@@ -1,6 +1,6 @@
 ## Tables and Schema
 
-```sql
+```
 Table: Teams
 
 +---------------+----------+
