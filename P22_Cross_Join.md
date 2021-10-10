@@ -37,7 +37,7 @@ SELECT * FROM Experiments
 
 ## Answer:
 
-```
+```sql
 SELECT 
   e1.platform, 
   e1.experiment_name,
