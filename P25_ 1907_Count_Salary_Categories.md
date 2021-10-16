@@ -47,6 +47,15 @@ Average Salary: No accounts.
 High Salary: Accounts 3, 6, and 8.
 ```
 
+```python
+import pandas as pd
+account_id = [3, 2, 8, 6]
+income = [108939, 12747, 87709, 91796]
+
+income = pd.DataFrame({'account_id': account_id,
+                       'income': income})
+```
+
 ## SQL
 
 ```sql
@@ -75,3 +84,22 @@ FROM CTE
 ```
 
 ## Python 
+
+```python
+def map_income(x):
+    if x < 20000:
+        return "Low Salary"
+    elif x > 50000:
+        return "High Salary"
+    else:
+        return "Average Salary"
+
+income_default = pd.DataFrame({"category": 
+                               ["Low Salary", "Average Salary", "High Salary"], "def_accounts_count": [0, 0, 0]})
+income["category"] = income["income"].map(map_income)
+income_agg = income.groupby("category")["account_id"].count().reset_index().rename(columns={"account_id": "accounts_count"})
+income_with_default = pd.merge(income_agg, income_default, how='outer', on="category")
+income_with_default["accounts_count"] = income_with_default["accounts_count"].fillna(income_with_default["def_accounts_count"])
+print(income_with_default)
+```
+
