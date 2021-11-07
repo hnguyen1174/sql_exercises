@@ -125,3 +125,30 @@ SELECT * FROM Friendship;
 
 ## Solution
 
+```sql
+WITH CTE AS 
+(
+  SELECT DISTINCT user_id, song_id, day
+  FROM Listens
+)
+
+SELECT 
+  l1.user_id as 'user_id', 
+  l2.user_id as 'recommended_id'
+FROM CTE AS l1
+LEFT JOIN CTE as l2
+ON 
+  l1.song_id = l2.song_id 
+  AND l1.day = l2.day
+  AND l1.user_id != l2.user_id
+GROUP BY l1.user_id, l2.user_id, l1.day
+HAVING 
+  COUNT(*) >= 3
+  AND (l1.user_id, l2.user_id) NOT IN (
+    SELECT user1_id, user2_id FROM Friendship
+  ) 
+  AND (l1.user_id, l2.user_id) NOT IN (
+    SELECT user2_id, user1_id FROM Friendship)
+  AND l1.user_id IS NOT NULL
+  AND l2.user_id IS NOT NULL
+```
