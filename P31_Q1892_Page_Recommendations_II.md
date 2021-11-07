@@ -85,3 +85,72 @@ Output:
 | 5       | 23      | 1             |
 +---------+---------+---------------+
 ```
+
+```sql
+CREATE TABLE Friendship (
+  user1_id INT,
+  user2_id INT
+);
+
+INSERT INTO Friendship VALUES 
+(1, 2),
+(1, 3),
+(1, 4),
+(2, 3),
+(2, 4),
+(2, 5),
+(6, 1);
+
+
+CREATE TABLE Likes (
+  user_id INT,
+  page_id INT
+);
+
+INSERT INTO Likes VALUES 
+(1, 88),
+(2, 23),
+(3, 24),
+(4, 56),
+(5, 11),
+(6, 33),
+(2, 77),
+(3, 77),
+(6, 88);
+```
+
+## Solution 1
+
+```sql
+WITH CTE AS (
+SELECT * FROM 
+(
+SELECT * FROM Friendship
+UNION 
+(
+  SELECT 
+  user2_id AS user1_id,
+  user1_id AS user2_id
+  FROM Friendship
+) 
+) f
+LEFT JOIN Likes l
+ON f.user2_id = l.user_id
+)
+
+
+SELECT * FROM (
+SELECT 
+  user1_id AS user_id, 
+  page_id,
+  COUNT(user2_id) AS friends_likes
+FROM CTE 
+GROUP BY user1_id, page_id
+ORDER BY user1_id, page_id DESC
+) TMP
+WHERE (user_id, page_id) NOT IN (
+  SELECT user_id, page_id
+  FROM Likes
+)
+ORDER BY user_id ASC, page_id DESC
+```
