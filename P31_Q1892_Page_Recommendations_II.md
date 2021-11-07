@@ -154,3 +154,20 @@ WHERE (user_id, page_id) NOT IN (
 )
 ORDER BY user_id ASC, page_id DESC
 ```
+
+## Solution 2 (Faster)
+
+```sql
+with f as
+(select * from friendship
+union all
+select user2_id as user1_id, user1_id as user2_id
+from friendship)
+
+select distinct f.user1_id as user_id, l.page_id,
+count(f.user2_id) as friends_likes
+from f join likes l on f.user2_id=l.user_id 
+where concat(f.user1_id,',', l.page_id) not in (select concat(user_id,',', page_id) from likes)
+group by 1,2
+order by 1
+```
