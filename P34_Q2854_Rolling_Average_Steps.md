@@ -23,7 +23,7 @@ insert into Steps (user_id, steps_count, steps_date) values ('6', '303', '2021-0
 ;
 ```
 
-/***
+```
 Write a solution to calculate 3-day rolling averages of steps for each user.
 
 We calculate the n-day rolling average this way:
@@ -69,7 +69,7 @@ Output:
 | 3       | 2021-09-09 | 505.67          |
 | 3       | 2021-09-10 | 674.67          |    
 +---------+------------+-----------------+
-***/
+```
 
 ## SQL Answers
 
