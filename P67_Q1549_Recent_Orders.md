@@ -127,6 +127,8 @@ data = [[1, 'keyboard', 120], [2, 'mouse', 80], [3, 'screen', 600], [4, 'hard di
 products = pd.DataFrame(data, columns=['product_id', 'product_name', 'price']).astype({'product_id':'Int64', 'product_name':'object', 'price':'Int64'})
 ```
 
+## 4. Pandas Answer
+
 ```python
 most_recent_orders_dates = orders.groupby('product_id')['order_date'].max().reset_index()
 most_recent_orders = pd.merge(
