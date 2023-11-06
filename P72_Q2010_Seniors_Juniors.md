@@ -95,3 +95,30 @@ UNION
 SELECT employee_id FROM CTE WHERE experience = 'Junior' AND RN < (SELECT 70000 - IFNULL(MAX(RN),0) FROM CTE WHERE experience = 'Senior' AND RN < 70000)
 ;
 ```
+
+```sql
+-- Problem 2004
+WITH CTE AS (
+  SELECT 
+    employee_id, 
+    experience, 
+    salary,
+    SUM(salary) OVER (PARTITION BY experience ORDER BY salary ASC) AS RN 
+  FROM Candidates
+),
+
+CTE2 AS (
+    SELECT employee_id, experience FROM CTE WHERE experience = 'Senior' AND RN < 70000
+    UNION
+    SELECT employee_id, experience FROM CTE WHERE experience = 'Junior' AND RN < (SELECT 70000 - IFNULL(MAX(RN),0) FROM CTE WHERE experience = 'Senior' AND RN < 70000)
+)
+
+SELECT 
+    t.experience,
+    COALESCE(COUNT(employee_id), 0) AS accepted_candidates
+FROM (SELECT DISTINCT experience FROM Candidates) t
+LEFT JOIN CTE2 c
+    ON t.experience = c.experience
+GROUP BY t.experience
+;
+```
