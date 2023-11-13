@@ -67,6 +67,12 @@ The longest winning streak was 1 match.
 ## 2. SQL Answer
 
 ```sql
+-- Essentially we need to do 2 different rankings -
+-- rnk - for each player, each type of results gets its own continuous ranking
+-- p_rnk - for each player, rank everything regardless of the result
+-- Then it's easy to see that for each player, 
+-- having the same diff (p_rnk - rnk) means they get the same result.
+
 SELECT player_id, IFNULL(MAX(cnt), 0) AS longest_streak
 FROM Matches m
 LEFT JOIN (
